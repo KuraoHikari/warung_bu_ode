@@ -1,13 +1,10 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:warung_bu_ode/components/cards/vertical_card.dart';
 import 'package:warung_bu_ode/models/menu.dart';
 
 class HorizontalScrollView extends StatefulWidget {
-  const HorizontalScrollView({Key? key, required this.product})
-      : super(key: key);
+  const HorizontalScrollView({super.key, required this.product});
 
   final String product;
 

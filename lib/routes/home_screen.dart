@@ -6,7 +6,7 @@ import 'package:warung_bu_ode/models/cart.dart';
 import 'package:warung_bu_ode/routes/cart_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   static const routeName = '/homeScreen';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:warung_bu_ode/models/cart.dart';
-import 'package:warung_bu_ode/models/invoice.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:warung_bu_ode/routes/cart_screen.dart';
 import 'package:warung_bu_ode/routes/detail_screen.dart';
 import 'package:warung_bu_ode/routes/home_screen.dart';
@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      builder: FToastBuilder(),
       routes: {
         DetailScreen.routeName: (context) => const DetailScreen(),
         CartScreen.routeName: (context) => const CartScreen(),

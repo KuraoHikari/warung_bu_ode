@@ -5,9 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:warung_bu_ode/models/cart.dart';
 import 'package:warung_bu_ode/models/menu.dart';
 import 'package:intl/intl.dart';
+import 'package:warung_bu_ode/routes/home_screen.dart';
 
 class DetailScreen extends StatefulWidget {
-  const DetailScreen({Key? key}) : super(key: key);
+  const DetailScreen({super.key});
 
   static const routeName = '/detailScreen';
 
@@ -17,13 +18,19 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   final idrFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
+
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as MenuItem;
     return Scaffold(
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
+            _showToast(context);
             Provider.of<CartProvider>(context, listen: false).addItem(args);
+            Navigator.pushNamed(
+              context,
+              HomeScreen.routeName,
+            );
           },
           foregroundColor: Colors.white,
           backgroundColor: Colors.green,
@@ -48,7 +55,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             bottomRight: Radius.circular(30)),
                         child: Container(
                           height: 310,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                               //image size fill
                               image: AssetImage('assets/images/wp.png'),
@@ -142,14 +149,14 @@ class _DetailScreenState extends State<DetailScreen> {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
+                        const Padding(
+                          padding: EdgeInsets.only(
                               bottom: 0, top: 15, left: 20, right: 20),
                           child: Row(
                             children: [
                               Text(
                                 "Deskripsi :",
-                                style: const TextStyle(
+                                style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: "Inter",
                                     color: Colors.white),
@@ -160,14 +167,13 @@ class _DetailScreenState extends State<DetailScreen> {
                         Padding(
                           padding: const EdgeInsets.only(
                               bottom: 15, top: 0, left: 20, right: 20),
-                          child: Container(
-                              child: Text(
+                          child: Text(
                             args.desc,
                             style: const TextStyle(
                                 fontSize: 16,
                                 fontFamily: "Inter",
                                 color: Colors.white),
-                          )),
+                          ),
                         ),
                       ],
                     )),
@@ -177,5 +183,31 @@ class _DetailScreenState extends State<DetailScreen> {
             ],
           ),
         ));
+  }
+
+  void _showToast(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+    final args = ModalRoute.of(context)!.settings.arguments as MenuItem;
+    scaffold.showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.green,
+        content: Text(
+          'Added ${args.title} to cart',
+          style: const TextStyle(color: Colors.white),
+        ),
+        action: SnackBarAction(
+          label: 'UNDO',
+          textColor: Colors.white,
+          onPressed: () {
+            Provider.of<CartProvider>(context, listen: false).removeItem(args);
+            scaffold.hideCurrentSnackBar;
+          },
+        ),
+      ),
+    );
+
+    Future.delayed(Duration(seconds: 3)).then((_) {
+      scaffold.hideCurrentSnackBar();
+    });
   }
 }

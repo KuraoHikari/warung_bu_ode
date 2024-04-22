@@ -3,9 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:warung_bu_ode/models/cart.dart';
 import 'package:intl/intl.dart';
 import 'package:warung_bu_ode/models/invoice.dart';
+import 'package:warung_bu_ode/routes/home_screen.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({Key? key}) : super(key: key);
+  const CartScreen({super.key});
 
   static const routeName = '/cartScreen';
 
@@ -20,7 +21,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cart'),
+        title: const Text('Cart'),
       ),
       body: Consumer<CartProvider>(
         builder: (context, cart, child) {
@@ -35,14 +36,14 @@ class _CartScreenState extends State<CartScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     IconButton(
-                      icon: Icon(Icons.remove),
+                      icon: const Icon(Icons.remove),
                       onPressed: () {
                         cart.removeItem(item);
                       },
                     ),
                     Text('${item.quantity}'),
                     IconButton(
-                      icon: Icon(Icons.add),
+                      icon: const Icon(Icons.add),
                       onPressed: () {
                         cart.addItem(item);
                       },
@@ -72,7 +73,7 @@ class _CartScreenState extends State<CartScreen> {
                       crossAxisAlignment:
                           CrossAxisAlignment.start, // Add this line
                       children: [
-                        Divider(
+                        const Divider(
                           color: Colors.grey,
                           height: 30,
                           thickness: 1,
@@ -81,7 +82,7 @@ class _CartScreenState extends State<CartScreen> {
                           'ID: ${invoice.id}',
                           textAlign: TextAlign.start,
                         ),
-                        Divider(
+                        const Divider(
                           color: Colors.grey,
                           height: 30,
                           thickness: 1,
@@ -90,32 +91,36 @@ class _CartScreenState extends State<CartScreen> {
                             'Date: ${DateFormat('yyyy-MM-dd').format(invoice.date)}'),
                         ...invoice.items.map((item) => Text(
                             '${item.title}: ${item.quantity} x ${idrFormat.format(item.price)} = ${idrFormat.format(item.price * item.quantity)}')),
-                        Divider(
+                        const Divider(
                           color: Colors.grey,
                           height: 30,
                           thickness: 1,
                         ),
                         Text('Total: ${idrFormat.format(invoice.total)}'),
-                        Divider(
+                        const Divider(
                           color: Colors.grey,
                           height: 30,
                           thickness: 1,
                         ),
-                        Text('Note:'),
-                        Text('1. Screenshot this invoice.'),
-                        Text('2. Bring the screenshot to the cashier.'),
-                        Text('3. Pay according to the invoice.'),
+                        const Text('Note:'),
+                        const Text('1. Screenshot this invoice.'),
+                        const Text('2. Bring the screenshot to the cashier.'),
+                        const Text('3. Pay according to the invoice.'),
                       ],
                     ),
                     actions: [
                       TextButton(
-                        child: Text(
+                        child: const Text(
                           'Sudah Saya SS',
                           style: TextStyle(color: Colors.green),
                         ),
                         onPressed: () {
                           cart.clearCart();
                           Navigator.pop(context, 'OK');
+                          Navigator.pushNamed(
+                            context,
+                            HomeScreen.routeName,
+                          );
                         },
                       ),
                     ],
@@ -127,7 +132,7 @@ class _CartScreenState extends State<CartScreen> {
             backgroundColor: Colors.green,
             shape: null,
             label: Text('Total: ${idrFormat.format(cart.totalPrice)}'),
-            icon: Icon(Icons.payment),
+            icon: const Icon(Icons.payment),
           );
         },
       ),
