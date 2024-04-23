@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:warung_bu_ode/models/cart.dart';
 import 'package:intl/intl.dart';
 import 'package:warung_bu_ode/models/invoice.dart';
@@ -16,6 +17,15 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   final idrFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
+
+  void launchURL(String link) async {
+    final Uri url = Uri.parse(
+        'https://wa.me/6283114227556?text=${Uri.encodeComponent(link)}');
+
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +78,7 @@ class _CartScreenState extends State<CartScreen> {
                     items: List.from(cart.items),
                   );
                   return AlertDialog(
-                    title: Text('Invoice'),
+                    title: const Text('Invoice'),
                     content: Column(
                       crossAxisAlignment:
                           CrossAxisAlignment.start, // Add this line
@@ -103,18 +113,36 @@ class _CartScreenState extends State<CartScreen> {
                           thickness: 1,
                         ),
                         const Text('Note:'),
-                        const Text('1. Screenshot this invoice.'),
-                        const Text('2. Bring the screenshot to the cashier.'),
-                        const Text('3. Pay according to the invoice.'),
+                        const Text(
+                            '1. Kirim pesan invoice ke whatsapp kasir dengan menekan tombol kirim pesan.'),
+                        const Text('2. Bawa pesan invoice ke kasir.'),
+                        const Text('3. Bayar sesuai invoice.'),
+                        const Text(
+                            '4. Ambil nomor meja yang diberikan oleh kasir.'),
                       ],
                     ),
                     actions: [
                       TextButton(
                         child: const Text(
-                          'Sudah Saya SS',
+                          'Kirim Pesan Whatssapp',
                           style: TextStyle(color: Colors.green),
                         ),
                         onPressed: () {
+                          String message = '*Invoice*\n'
+                              '============================\n'
+                              'ID: ${invoice.id}\n'
+                              'Date: ${DateFormat('yyyy-MM-dd').format(invoice.date)}\n'
+                              '=========== *MENU* =========\n'
+                              '${invoice.items.map((item) => '*${item.title}*: ${item.quantity} x ${idrFormat.format(item.price)} = ${idrFormat.format(item.price * item.quantity)}').join('\n')}\n'
+                              '============================\n'
+                              '*Total*: ${idrFormat.format(invoice.total)}\n'
+                              '============================\n'
+                              '*Note*:\n'
+                              '1. Kirim pesan invoice ke whatsapp kasir dengan menekan tombol kirim pesan.\n'
+                              '2. Bawa pesan invoice ke kasir.\n'
+                              '3. Bayar sesuai invoice.\n'
+                              '4. Ambil nomor meja yang diberikan oleh kasir.';
+                          launchURL(message);
                           cart.clearCart();
                           Navigator.pop(context, 'OK');
                           Navigator.pushNamed(
