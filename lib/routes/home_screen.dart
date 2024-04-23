@@ -4,6 +4,7 @@ import 'package:warung_bu_ode/components/scroll_views/horizontal_scroll_view.dar
 import 'package:warung_bu_ode/models/cart.dart';
 
 import 'package:warung_bu_ode/routes/cart_screen.dart';
+import 'package:warung_bu_ode/routes/view_all_menu_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -66,11 +67,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 10, left: 20, right: 20),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
                   child: Row(
                     children: [
-                      Text(
+                      const Text(
                         "Makanan",
                         style: TextStyle(
                             fontSize: 20,
@@ -78,32 +79,45 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontWeight: FontWeight.w600,
                             color: Colors.black),
                       ),
-                      Spacer(),
-                      Text(
-                        "Lihat Semua",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: "Inter",
-                            color: Colors.green),
-                      ),
-                      Icon(
-                        Icons.arrow_forward,
-                        color: Colors.green,
-                        size: 16.0,
-                        semanticLabel:
-                            'Text to announce in accessibility modes',
-                      ),
+                      const Spacer(),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            ViewAllMenuScreen.routeName,
+                          );
+                        },
+                        child: const Row(
+                          children: [
+                            Text(
+                              "Lihat Semua",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: "Inter",
+                                color: Colors.green,
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_forward,
+                              color: Colors.green,
+                              size: 16.0,
+                              semanticLabel:
+                                  'Text to announce in accessibility modes',
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
                 const HorizontalScrollView(
                   product: "makanan",
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 0, left: 20, right: 20),
+                Padding(
+                  padding: const EdgeInsets.only(top: 0, left: 20, right: 20),
                   child: Row(
                     children: [
-                      Text(
+                      const Text(
                         "Minuman",
                         style: TextStyle(
                             fontSize: 20,
@@ -111,21 +125,34 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontWeight: FontWeight.w600,
                             color: Colors.black),
                       ),
-                      Spacer(),
-                      Text(
-                        "Lihat Semua",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: "Inter",
-                            color: Colors.green),
-                      ),
-                      Icon(
-                        Icons.arrow_forward,
-                        color: Colors.green,
-                        size: 16.0,
-                        semanticLabel:
-                            'Text to announce in accessibility modes',
-                      ),
+                      const Spacer(),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            ViewAllMenuScreen.routeName,
+                          );
+                        },
+                        child: const Row(
+                          children: [
+                            Text(
+                              "Lihat Semua",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: "Inter",
+                                color: Colors.green,
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_forward,
+                              color: Colors.green,
+                              size: 16.0,
+                              semanticLabel:
+                                  'Text to announce in accessibility modes',
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),

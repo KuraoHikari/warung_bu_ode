@@ -4,8 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:warung_bu_ode/routes/cart_screen.dart';
 import 'package:warung_bu_ode/routes/detail_screen.dart';
 import 'package:warung_bu_ode/routes/home_screen.dart';
-// Importing material package for Flutter UI.
 import 'package:provider/provider.dart';
+import 'package:warung_bu_ode/routes/view_all_menu_screen.dart';
 
 void main() {
   runApp(
@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget {
       routes: {
         DetailScreen.routeName: (context) => const DetailScreen(),
         CartScreen.routeName: (context) => const CartScreen(),
-        HomeScreen.routeName: (context) => const HomeScreen()
+        HomeScreen.routeName: (context) => const HomeScreen(),
+        ViewAllMenuScreen.routeName: (context) => const ViewAllMenuScreen(),
       },
       title: 'Anime Data Fetch', // Setting the title of the application.
       home: const HomeScreen(), // Setting the home page of the application.
