@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:warung_bu_ode/routes/detail_screen.dart';
 
 class ViewAllMenuScreen extends StatefulWidget {
-  const ViewAllMenuScreen({Key? key}) : super(key: key); 
+  const ViewAllMenuScreen({super.key});
 
   static const routeName = '/ViewAllMenuScreen';
 
@@ -12,7 +12,7 @@ class ViewAllMenuScreen extends StatefulWidget {
   _ViewAllMenuScreenState createState() => _ViewAllMenuScreenState();
 }
 
-class _ViewAllMenuScreenState extends State<ViewAllMenuScreen> { 
+class _ViewAllMenuScreenState extends State<ViewAllMenuScreen> {
   final idrFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
 
   @override

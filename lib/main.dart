@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         HomeScreen.routeName: (context) => const HomeScreen(),
         ViewAllMenuScreen.routeName: (context) => const ViewAllMenuScreen(),
       },
-      title: 'Anime Data Fetch', // Setting the title of the application.
+      title: 'Warung BU ODE', // Setting the title of the application.
       home: const HomeScreen(), // Setting the home page of the application.
     );
   }

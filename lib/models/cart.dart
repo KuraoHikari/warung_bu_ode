@@ -28,10 +28,12 @@ class CartProvider with ChangeNotifier {
   }
 
   void removeItem(MenuItem item) {
+    print(item.quantity);
     item.quantity -= 1;
     if (item.quantity <= 0) {
       _items.remove(item);
     }
+    print(item.quantity);
     saveItemsToPrefs();
     notifyListeners();
   }

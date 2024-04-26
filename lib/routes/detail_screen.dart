@@ -18,24 +18,54 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   final idrFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
-
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as MenuItem;
     return Scaffold(
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            _showToast(context);
-            Provider.of<CartProvider>(context, listen: false).addItem(args);
-            Navigator.pushNamed(
-              context,
-              HomeScreen.routeName,
-            );
-          },
+          onPressed: _isLoading
+              ? null
+              : () async {
+                  setState(() {
+                    _isLoading = true;
+                  });
+                  Provider.of<CartProvider>(context, listen: false)
+                      .addItem(args);
+                  _showToast(context);
+                  await Future.delayed(Duration(seconds: 3));
+                  Navigator.pushNamed(
+                    context,
+                    HomeScreen.routeName,
+                  );
+                  setState(() {
+                    _isLoading = false;
+                  });
+                },
           foregroundColor: Colors.white,
           backgroundColor: Colors.green,
           shape: null,
-          label: const Text('Add to cart'),
+          label: _isLoading
+              ? const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 20.0, // adjust the size as needed
+                      width: 20.0, // adjust the size as needed
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 10.0),
+                      child: Text(
+                        'Loading...',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                )
+              : const Text('Add to cart'),
           icon: const Icon(Icons.add_shopping_cart),
         ),
         backgroundColor: Colors.white,
@@ -192,7 +222,7 @@ class _DetailScreenState extends State<DetailScreen> {
       SnackBar(
         backgroundColor: Colors.green,
         content: Text(
-          'Added ${args.title} to cart',
+          'Adding ${args.title} to cart',
           style: const TextStyle(color: Colors.white),
         ),
         action: SnackBarAction(
@@ -206,8 +236,8 @@ class _DetailScreenState extends State<DetailScreen> {
       ),
     );
 
-    Future.delayed(Duration(seconds: 3)).then((_) {
-      scaffold.hideCurrentSnackBar();
-    });
+    // Future.delayed(Duration(seconds: 3)).then((_) {
+    //   scaffold.hideCurrentSnackBar();
+    // });
   }
 }
